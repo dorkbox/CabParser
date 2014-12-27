@@ -26,6 +26,7 @@ import dorkbox.util.cab.structure.CabEnumerator;
 import dorkbox.util.cab.structure.CabFileEntry;
 import dorkbox.util.cab.structure.CabFolderEntry;
 import dorkbox.util.cab.structure.CabHeader;
+import dorkbox.util.process.NullOutputStream;
 
 public final class CabDecoder {
     private CabInputStream cabInputStream;
