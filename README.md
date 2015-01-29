@@ -1,5 +1,5 @@
-CAB Extractor
-=============
+CAB PARSER
+===========
 
 Provides a means to parse and extract data from Microsoft CAB files, from Java.
 
