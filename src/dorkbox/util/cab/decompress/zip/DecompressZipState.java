@@ -45,7 +45,7 @@ final class DecompressZipState {
         this.intA4 = new int[this.intA * 2];
     }
 
-    void c() throws CorruptCabException {
+    void main() throws CorruptCabException {
         int[] arrayOfInt1 = new int[17];
         int[] arrayOfInt2 = new int[17];
         int k = 0;

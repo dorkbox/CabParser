@@ -15,12 +15,12 @@
  */
 package dorkbox.util.cab;
 
-import java.io.OutputStream;
-
 import dorkbox.util.cab.structure.CabFileEntry;
 
+import java.io.OutputStream;
+
 public interface CabStreamSaver {
-    public abstract OutputStream openOutputStream(CabFileEntry entry);
-    public abstract void closeOutputStream(OutputStream outputStream, CabFileEntry entry);
-    public abstract boolean saveReservedAreaData(byte[] data, int dataLength);
+    OutputStream openOutputStream(CabFileEntry entry);
+    void closeOutputStream(OutputStream outputStream, CabFileEntry entry);
+    boolean saveReservedAreaData(byte[] data, int dataLength);
 }

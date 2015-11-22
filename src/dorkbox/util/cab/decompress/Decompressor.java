@@ -20,8 +20,8 @@ import dorkbox.util.cab.structure.CabConstants;
 
 
 public interface Decompressor extends CabConstants {
-    public abstract void init(int windowBits) throws CabException;
-    public abstract void decompress(byte[] inputBytes, byte[] outputBytes, int inputLength, int outputLength) throws CabException;
-    public abstract int getMaxGrowth();
-    public abstract void reset(int windowBits) throws CabException;
+    void init(int windowBits) throws CabException;
+    void decompress(byte[] inputBytes, byte[] outputBytes, int inputLength, int outputLength) throws CabException;
+    int getMaxGrowth();
+    void reset(int windowBits) throws CabException;
 }

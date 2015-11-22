@@ -111,7 +111,8 @@ public final class DecompressZip implements Decompressor {
         }
     }
 
-    private void b() throws CabException {
+    @SuppressWarnings({"NumericCastThatLosesPrecision", "Duplicates"})
+    private void bits() throws CabException {
         int i = this.int3;
         int j = this.outputLength;
         byte[] arrayOfByte1 = this.outputBytes;
@@ -125,6 +126,7 @@ public final class DecompressZip implements Decompressor {
         byte[] arrayOfByte3 = this.state2.byteA;
         int k = this.int1;
         int m = this.int2;
+
         do {
             if (this.index > this.inputPlus4) {
                 break;
@@ -222,34 +224,39 @@ public final class DecompressZip implements Decompressor {
     }
 
     private void readStuffcommon() throws CabException {
-        this.state1.c();
-        this.state2.c();
+        this.state1.main();
+        this.state2.main();
     }
 
-    private void c() {
+    private void setup() {
         int i = 0;
+
         do {
-            this.state1.byteA[i] = 8;
+            this.state1.byteA[i] = (byte) 8;
             i++;
         } while (i <= 143);
+
         i = 144;
         do {
-            this.state1.byteA[i] = 9;
+            this.state1.byteA[i] = (byte) 9;
             i++;
         } while (i <= 255);
         i = 256;
+
         do {
-            this.state1.byteA[i] = 7;
+            this.state1.byteA[i] = (byte) 7;
             i++;
         } while (i <= 279);
         i = 280;
+
         do {
-            this.state1.byteA[i] = 8;
+            this.state1.byteA[i] = (byte) 8;
             i++;
         } while (i <= 287);
+
         i = 0;
         do {
-            this.state2.byteA[i] = 5;
+            this.state2.byteA[i] = (byte) 5;
             i++;
         } while (i < 32);
     }
@@ -258,7 +265,8 @@ public final class DecompressZip implements Decompressor {
         return byte1 & 0xFF | (byte2 & 0xFF) << 8;
     }
 
-    private void d() throws CabException {
+    @SuppressWarnings("NumericCastThatLosesPrecision")
+    private void expand() throws CabException {
         check();
         int i = calc(5) + 257;
         int j = calc(5) + 1;
@@ -268,9 +276,9 @@ public final class DecompressZip implements Decompressor {
             check();
         }
         for (int n = k; n < ar3.length; n++) {
-            this.state3.byteA[ar3[n]] = 0;
+            this.state3.byteA[ar3[n]] = (byte) 0;
         }
-        this.state3.c();
+        this.state3.main();
         int m = i + j;
         int n = 0;
         while (n < m) {
@@ -299,7 +307,7 @@ public final class DecompressZip implements Decompressor {
                         throw new CorruptCabException();
                     }
                     for (i3 = 0; i3 < i2; i3++) {
-                        this.bytes[n++] = 0;
+                        this.bytes[n++] = (byte) 0;
                     }
                 } else {
                     i2 = calc(7) + 11;
@@ -307,20 +315,21 @@ public final class DecompressZip implements Decompressor {
                         throw new CorruptCabException();
                     }
                     for (i3 = 0; i3 < i2; i3++) {
-                        this.bytes[n++] = 0;
+                        this.bytes[n++] = (byte) 0;
                     }
                 }
             }
         }
+
         System.arraycopy(this.bytes, 0, this.state1.byteA, 0, i);
         for (n = i; n < 288; n++) {
-            this.state1.byteA[n] = 0;
+            this.state1.byteA[n] = (byte) 0;
         }
         for (n = 0; n < j; n++) {
             this.state2.byteA[n] = this.bytes[n + i];
         }
         for (n = j; n < 32; n++) {
-            this.state2.byteA[n] = 0;
+            this.state2.byteA[n] = (byte) 0;
         }
         if (this.state1.byteA[256] == 0) {
             throw new CorruptCabException();
@@ -344,26 +353,26 @@ public final class DecompressZip implements Decompressor {
         int i = calc(1);
         int j = calc(2);
         if (j == 2) {
-            d();
+            expand();
             readStuffcommon();
-            b();
+            bits();
             return;
         }
         if (j == 1) {
-            c();
+            setup();
             readStuffcommon();
-            b();
+            bits();
             return;
         }
         if (j == 0) {
-            e();
+            verify();
             return;
         }
 
         throw new CabException();
     }
 
-    private void e() throws CabException {
+    private void verify() throws CabException {
         mod();
         if (this.index >= this.inputPlus4) {
             throw new CorruptCabException();
@@ -371,7 +380,8 @@ public final class DecompressZip implements Decompressor {
         int i = makeShort(this.inputBytes[this.index], this.inputBytes[this.index + 1]);
         int j = makeShort(this.inputBytes[this.index + 2], this.inputBytes[this.index + 3]);
 
-        if ((short) i != (short) (j ^ 0xFFFFFFFF)) {
+        //noinspection NumericCastThatLosesPrecision
+        if ((short) i != (short) (~j)) {
             throw new CorruptCabException();
         }
 

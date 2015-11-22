@@ -150,11 +150,11 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
 
     private int decompressLoop(int bytesToRead) throws CabException {
         int i = bytesToRead;
-        int lastWindowPosition = 0;
+        int lastWindowPosition;
         int k;
         int m;
 
-        if (this.readHeader == true) {
+        if (this.readHeader) {
             // read header
             if (readBits(1) == 1) {
                 k = readBits(16);
@@ -266,6 +266,7 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
         return lastWindowPosition;
     }
 
+    @SuppressWarnings("NumericCastThatLosesPrecision")
     private void decodeIntelBlock(byte[] bytes, int outLength) {
         if (outLength <= 6 || !this.intelStarted) {
             this.intelCursorPos += outLength;
@@ -281,7 +282,7 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
         // save bytes
         while (abs_off < 6) {
             this.savedBytes[abs_off] = bytes[adjustedOutLength + abs_off];
-            bytes[adjustedOutLength + abs_off] = -24;
+            bytes[adjustedOutLength + abs_off] = (byte) -24;
             abs_off++;
         }
 
@@ -383,6 +384,7 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
         } while (i < this.wndSize);
     }
 
+    @SuppressWarnings("NumericCastThatLosesPrecision")
     private void verbatimAlgo(int this_run) throws CorruptCabException {
         int i = this.windowPosition;
         int mask = this.windowMask;
@@ -480,6 +482,7 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
         return i;
     }
 
+    @SuppressWarnings("NumericCastThatLosesPrecision")
     private void alignedAlgo(int this_run) throws CorruptCabException {
         int windowPos = this.windowPosition;
         int mask = this.windowMask;

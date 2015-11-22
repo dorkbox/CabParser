@@ -15,16 +15,18 @@
  */
 package dorkbox.util.cab.structure;
 
+import dorkbox.util.bytes.LittleEndian;
+
 import java.io.IOException;
 import java.io.InputStream;
-
-import dorkbox.util.bytes.LittleEndian;
 
 public final class CabFolderEntry implements CabConstants {
     /** offset of the first CFDATA block in this folder, 4bytes */
     public long coffCabStart;
+
     /** number of CFDATA blocks in this folder, 2bytes */
     public int  cCFData;
+
     /** compression type indicator , 2bytes */
     public int  compressionMethod = 0;
 
