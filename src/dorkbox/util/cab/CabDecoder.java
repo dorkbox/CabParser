@@ -15,18 +15,18 @@
  */
 package dorkbox.util.cab;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Enumeration;
-
 import dorkbox.util.cab.decompress.CabDecompressor;
 import dorkbox.util.cab.structure.CabEnumerator;
 import dorkbox.util.cab.structure.CabFileEntry;
 import dorkbox.util.cab.structure.CabFolderEntry;
 import dorkbox.util.cab.structure.CabHeader;
 import dorkbox.util.process.NullOutputStream;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
 
 public final class CabDecoder {
     private CabInputStream cabInputStream;
@@ -81,6 +81,14 @@ public final class CabDecoder {
         this.cabInputStream = new CabInputStream(inputStream);
 
         readData();
+    }
+
+    /**
+     * Gets the version number.
+     */
+    public static
+    String getVersion() {
+        return "1.1";
     }
 
     public Enumeration<Object> entries() {
