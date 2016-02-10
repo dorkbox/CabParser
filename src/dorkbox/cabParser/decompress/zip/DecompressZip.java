@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab.decompress.zip;
+package dorkbox.cabParser.decompress.zip;
 
-import dorkbox.util.cab.CabException;
-import dorkbox.util.cab.CorruptCabException;
-import dorkbox.util.cab.decompress.Decompressor;
+import dorkbox.cabParser.CabException;
+import dorkbox.cabParser.CorruptCabException;
+import dorkbox.cabParser.decompress.Decompressor;
 
 public final class DecompressZip implements Decompressor {
     private static final int[] ar1 = {3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,

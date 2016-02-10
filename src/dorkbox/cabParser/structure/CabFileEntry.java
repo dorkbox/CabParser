@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab.structure;
+package dorkbox.cabParser.structure;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Date;
 
+import dorkbox.cabParser.CabException;
+import dorkbox.cabParser.CorruptCabException;
 import dorkbox.util.bytes.LittleEndian;
-import dorkbox.util.cab.CabException;
-import dorkbox.util.cab.CorruptCabException;
 
 public final class CabFileEntry {
     public static final Charset US_ASCII = Charset.forName("US-ASCII");

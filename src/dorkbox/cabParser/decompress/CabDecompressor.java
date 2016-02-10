@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab.decompress;
+package dorkbox.cabParser.decompress;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import dorkbox.util.cab.CabException;
-import dorkbox.util.cab.CorruptCabException;
-import dorkbox.util.cab.decompress.lzx.DecompressLzx;
-import dorkbox.util.cab.decompress.none.DecompressNone;
-import dorkbox.util.cab.decompress.zip.DecompressZip;
-import dorkbox.util.cab.structure.CabConstants;
-import dorkbox.util.cab.structure.CfDataRecord;
+import dorkbox.cabParser.CabException;
+import dorkbox.cabParser.decompress.lzx.DecompressLzx;
+import dorkbox.cabParser.decompress.zip.DecompressZip;
+import dorkbox.cabParser.CorruptCabException;
+import dorkbox.cabParser.decompress.none.DecompressNone;
+import dorkbox.cabParser.structure.CabConstants;
+import dorkbox.cabParser.structure.CfDataRecord;
 
 public final class CabDecompressor implements CabConstants {
     private byte[]          readBuffer;

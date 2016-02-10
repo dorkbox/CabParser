@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab;
+package dorkbox.cabParser;
 
-import dorkbox.util.cab.decompress.CabDecompressor;
-import dorkbox.util.cab.structure.CabEnumerator;
-import dorkbox.util.cab.structure.CabFileEntry;
-import dorkbox.util.cab.structure.CabFolderEntry;
-import dorkbox.util.cab.structure.CabHeader;
+import dorkbox.cabParser.decompress.CabDecompressor;
+import dorkbox.cabParser.structure.CabEnumerator;
+import dorkbox.cabParser.structure.CabFileEntry;
+import dorkbox.cabParser.structure.CabFolderEntry;
+import dorkbox.cabParser.structure.CabHeader;
 import dorkbox.util.process.NullOutputStream;
 
 import java.io.ByteArrayOutputStream;
@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
-public final class CabDecoder {
+public final class CabParser {
     private CabInputStream cabInputStream;
 
     private CabStreamSaver streamSaver;
@@ -39,7 +39,8 @@ public final class CabDecoder {
     public CabFolderEntry[] folders;
     public CabFileEntry[]   files;
 
-    public CabDecoder(InputStream inputStream, final String fileNameToExtract) throws CabException, IOException {
+    public
+    CabParser(InputStream inputStream, final String fileNameToExtract) throws CabException, IOException {
         if (fileNameToExtract == null || fileNameToExtract.isEmpty()) {
             throw new IllegalArgumentException("Filename must be valid!");
         }
@@ -55,8 +56,8 @@ public final class CabDecoder {
             public OutputStream openOutputStream(CabFileEntry cabFile) {
                 String name = cabFile.getName();
                 if (fileNameToExtract.equalsIgnoreCase(name)) {
-                    CabDecoder.this.outputStream = new ByteArrayOutputStream((int) cabFile.getSize());
-                    return CabDecoder.this.outputStream;
+                    CabParser.this.outputStream = new ByteArrayOutputStream((int) cabFile.getSize());
+                    return CabParser.this.outputStream;
                 } else {
                     return null;
                 }
@@ -67,7 +68,7 @@ public final class CabDecoder {
                 if (outputStream != null) {
                     try {
                         outputStream.close();
-                    } catch (IOException e) {
+                    } catch (IOException ignored) {
                     }
                 }
             }
@@ -76,7 +77,8 @@ public final class CabDecoder {
         readData();
     }
 
-    public CabDecoder(InputStream inputStream, CabStreamSaver streamSaver) throws CabException, IOException {
+    public
+    CabParser(InputStream inputStream, CabStreamSaver streamSaver) throws CabException, IOException {
         this.streamSaver = streamSaver;
         this.cabInputStream = new CabInputStream(inputStream);
 
@@ -88,7 +90,7 @@ public final class CabDecoder {
      */
     public static
     String getVersion() {
-        return "1.1";
+        return "2.0";
     }
 
     public Enumeration<Object> entries() {
@@ -174,3 +176,6 @@ public final class CabDecoder {
         return this.outputStream;
     }
 }
+
+
+

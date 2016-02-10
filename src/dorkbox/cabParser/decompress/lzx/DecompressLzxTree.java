@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab.decompress.lzx;
+package dorkbox.cabParser.decompress.lzx;
 
-import dorkbox.util.cab.CorruptCabException;
+import dorkbox.cabParser.CorruptCabException;
 
 final class DecompressLzxTree implements LZXConstants {
     private int size;

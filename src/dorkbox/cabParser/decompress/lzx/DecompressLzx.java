@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab.decompress.lzx;
+package dorkbox.cabParser.decompress.lzx;
 
-import dorkbox.util.cab.CabException;
-import dorkbox.util.cab.CorruptCabException;
-import dorkbox.util.cab.decompress.Decompressor;
+import dorkbox.cabParser.CabException;
+import dorkbox.cabParser.CorruptCabException;
+import dorkbox.cabParser.decompress.Decompressor;
 
 public final class DecompressLzx implements Decompressor, LZXConstants {
     private int[]   extraBits = new int[51];
@@ -107,14 +107,14 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
         int decompressedOutputLength = decompressLoop(outputLength);
         System.arraycopy(this.localWindow, this.outputPosition, outputBytes, 0, decompressedOutputLength);
 
-        if (this.framesRead++ < LZXConstants.E8_DISABLE_THRESHOLD && this.intelFileSize != 0) {
+        if (this.framesRead++ < E8_DISABLE_THRESHOLD && this.intelFileSize != 0) {
             decodeIntelBlock(outputBytes, decompressedOutputLength);
         }
     }
 
     @Override
     public int getMaxGrowth() {
-        return LZXConstants.MAX_GROWTH;
+        return MAX_GROWTH;
     }
 
     @Override

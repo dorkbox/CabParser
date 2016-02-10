@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab;
+package dorkbox.cabParser;
 
 
 public final class CorruptCabException extends CabException {

@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab;
+package dorkbox.cabParser.decompress;
 
-public class CabException extends Exception {
-    private static final long serialVersionUID = 1L;
+import dorkbox.cabParser.CabException;
+import dorkbox.cabParser.structure.CabConstants;
 
-    public CabException(String errorMessage) {
-        super(errorMessage);
-    }
 
-    public CabException() {
-    }
+public interface Decompressor extends CabConstants {
+    void init(int windowBits) throws CabException;
+    void decompress(byte[] inputBytes, byte[] outputBytes, int inputLength, int outputLength) throws CabException;
+    int getMaxGrowth();
+    void reset(int windowBits) throws CabException;
 }

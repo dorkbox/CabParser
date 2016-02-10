@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab.structure;
+package dorkbox.cabParser.structure;
+
+import dorkbox.cabParser.CabParser;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
-
-import dorkbox.util.cab.CabDecoder;
 
 public final class CabEnumerator implements Enumeration<Object> {
     private int        fileCount = 0;
     private int        folderCount = 0;
 
-    private CabDecoder cabDecoder;
+    private CabParser cabParser;
 
     private boolean    b;
     private int        folderIndex;
@@ -32,35 +32,35 @@ public final class CabEnumerator implements Enumeration<Object> {
     @Override
     public Object nextElement() {
         if (!this.b) {
-            if (this.fileCount < this.cabDecoder.header.cFiles) {
-                return this.cabDecoder.files[this.fileCount++];
+            if (this.fileCount < this.cabParser.header.cFiles) {
+                return this.cabParser.files[this.fileCount++];
             }
             throw new NoSuchElementException();
         }
 
-        if (this.cabDecoder.files[this.fileCount].iFolder != this.folderIndex) {
-            this.folderIndex = this.cabDecoder.files[this.fileCount].iFolder;
+        if (this.cabParser.files[this.fileCount].iFolder != this.folderIndex) {
+            this.folderIndex = this.cabParser.files[this.fileCount].iFolder;
 
-            if (this.folderCount < this.cabDecoder.folders.length) {
-                return this.cabDecoder.folders[this.folderCount++];
+            if (this.folderCount < this.cabParser.folders.length) {
+                return this.cabParser.folders[this.folderCount++];
             }
         }
 
-        if (this.fileCount < this.cabDecoder.header.cFiles) {
-            return this.cabDecoder.files[this.fileCount++];
+        if (this.fileCount < this.cabParser.header.cFiles) {
+            return this.cabParser.files[this.fileCount++];
         }
 
         throw new NoSuchElementException();
     }
 
-    public CabEnumerator(CabDecoder decoder, boolean b) {
-        this.cabDecoder = decoder;
+    public CabEnumerator(CabParser decoder, boolean b) {
+        this.cabParser = decoder;
         this.b = b;
         this.folderIndex = -2;
     }
 
     @Override
     public boolean hasMoreElements() {
-        return this.fileCount < this.cabDecoder.header.cFiles;
+        return this.fileCount < this.cabParser.header.cFiles;
     }
 }

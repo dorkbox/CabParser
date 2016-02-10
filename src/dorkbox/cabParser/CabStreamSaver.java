@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.util.cab;
+package dorkbox.cabParser;
 
-import dorkbox.util.cab.structure.CabFileEntry;
+import dorkbox.cabParser.structure.CabFileEntry;
 
 import java.io.OutputStream;
 
