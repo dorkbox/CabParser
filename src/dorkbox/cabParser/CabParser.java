@@ -90,7 +90,7 @@ public final class CabParser {
      */
     public static
     String getVersion() {
-        return "2.4";
+        return "2.6";
     }
 
     public Enumeration<Object> entries() {
