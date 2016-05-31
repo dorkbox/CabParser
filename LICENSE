@@ -1,6 +1,7 @@
     - Dorkbox Cab Parser - Apache 2.0 License
       https://github.com/dorkbox
       Copyright 2012, dorkbox, llc
+        Parse and extract data from Microsoft LZX compressed .cab files in Java 6+
 
 
     - Dorkbox Utils - Apache 2.0 License
