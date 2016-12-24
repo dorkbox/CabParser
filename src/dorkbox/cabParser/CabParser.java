@@ -15,18 +15,17 @@
  */
 package dorkbox.cabParser;
 
-import dorkbox.cabParser.decompress.CabDecompressor;
-import dorkbox.cabParser.structure.CabEnumerator;
-import dorkbox.cabParser.structure.CabFileEntry;
-import dorkbox.cabParser.structure.CabFolderEntry;
-import dorkbox.cabParser.structure.CabHeader;
-import dorkbox.util.process.NullOutputStream;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
+
+import dorkbox.cabParser.decompress.CabDecompressor;
+import dorkbox.cabParser.structure.CabEnumerator;
+import dorkbox.cabParser.structure.CabFileEntry;
+import dorkbox.cabParser.structure.CabFolderEntry;
+import dorkbox.cabParser.structure.CabHeader;
 
 public final class CabParser {
     private CabInputStream cabInputStream;
@@ -161,7 +160,31 @@ public final class CabParser {
                 }
 
                 if (currentCount != totalCount) {
-                    extractor.read(totalCount - currentCount, new NullOutputStream());
+                    extractor.read(totalCount - currentCount, new OutputStream() {
+                        @Override
+                        public
+                        void write(int i) throws IOException {
+                            //do nothing
+                        }
+
+                        @Override
+                        public
+                        void write(byte[] b) throws IOException {
+                            //do nothing
+                        }
+
+                        @Override
+                        public
+                        void write(byte[] b, int off, int len) throws IOException {
+                            //do nothing
+                        }
+
+                        @Override
+                        public
+                        void flush() throws IOException {
+                            //do nothing
+                        }
+                    });
                     currentCount = totalCount;
                 }
 
