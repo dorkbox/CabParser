@@ -86,16 +86,16 @@ public final class CabHeader implements CabConstants {
         int j = input.read();
         int k = input.read();
         int m = input.read();
-        // MSCF
+        // Contains the characters "M", "S", "C", and "F" (bytes 0x4D, 0x53, 0x43, 0x46). This field is used to ensure that the file is a cabinet (.cab) file.
         if (i != 77 || j != 83 || k != 67 || m != 70) {
             throw new CorruptCabException("Missing header signature");
         }
 
-        this.reserved1 = LittleEndian.UInt_.from(input).longValue();
-        this.cbCabinet = LittleEndian.UInt_.from(input).longValue();
-        this.reserved2 = LittleEndian.UInt_.from(input).longValue();
-        this.coffFiles = LittleEndian.UInt_.from(input).longValue();
-        this.reserved3 = LittleEndian.UInt_.from(input).longValue();
+        this.reserved1 = LittleEndian.UInt_.from(input).longValue(); // must be 0
+        this.cbCabinet = LittleEndian.UInt_.from(input).longValue(); // Specifies the total size of the cabinet file, in bytes.
+        this.reserved2 = LittleEndian.UInt_.from(input).longValue(); // must be 0
+        this.coffFiles = LittleEndian.UInt_.from(input).longValue(); // Specifies the absolute file offset, in bytes, of the first CFFILE field entry.
+        this.reserved3 = LittleEndian.UInt_.from(input).longValue(); // must be 0
 
 
         // Currently, versionMajor = 1 and versionMinor = 3
