@@ -24,11 +24,14 @@ This project includes some utility classes that are a small subset of a much lar
 Maven Info
 ---------
 ```
-<dependency>
-  <groupId>com.dorkbox</groupId>
-  <artifactId>CabParser</artifactId>
-  <version>2.11</version>
-</dependency>
+<dependencies>
+    ...
+    <dependency>
+      <groupId>com.dorkbox</groupId>
+      <artifactId>CabParser</artifactId>
+      <version>2.11</version>
+    </dependency>
+</dependencies>
 ```
 
 Or if you don't want to use Maven, you can access the files directly here:  
