@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser.decompress.lzx;
+package dorkbox.cabparser.decompress.lzx;
 
-import dorkbox.cabParser.CabException;
-import dorkbox.cabParser.CorruptCabException;
-import dorkbox.cabParser.decompress.Decompressor;
+import dorkbox.cabparser.CabException;
+import dorkbox.cabparser.CorruptCabException;
+import dorkbox.cabparser.decompress.Decompressor;
 
 public final class DecompressLzx implements Decompressor, LZXConstants {
     private int[]   extraBits = new int[51];

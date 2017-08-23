@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser.decompress.zip;
+package dorkbox.cabparser.decompress.zip;
 
-import dorkbox.cabParser.CorruptCabException;
+import dorkbox.cabparser.CorruptCabException;
 
 final class DecompressZipState {
     private int               intA;

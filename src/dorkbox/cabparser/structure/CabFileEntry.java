@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser.structure;
+package dorkbox.cabparser.structure;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Date;
 
-import dorkbox.cabParser.CabException;
-import dorkbox.cabParser.CorruptCabException;
+import dorkbox.cabparser.CabException;
+import dorkbox.cabparser.CorruptCabException;
 import dorkbox.util.bytes.LittleEndian;
 
 public final class CabFileEntry {

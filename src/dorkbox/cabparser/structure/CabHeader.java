@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser.structure;
+package dorkbox.cabparser.structure;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import dorkbox.cabParser.CabException;
-import dorkbox.cabParser.CorruptCabException;
+import dorkbox.cabparser.CabException;
+import dorkbox.cabparser.CabStreamSaver;
+import dorkbox.cabparser.CorruptCabException;
 import dorkbox.util.bytes.LittleEndian;
-import dorkbox.cabParser.CabStreamSaver;
 
 public final class CabHeader implements CabConstants {
 

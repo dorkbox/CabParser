@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser.structure;
-
-import dorkbox.util.bytes.LittleEndian;
+package dorkbox.cabparser.structure;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import dorkbox.util.bytes.LittleEndian;
 
 public final class CabFolderEntry implements CabConstants {
     /** offset of the first CFDATA block in this folder, 4bytes */

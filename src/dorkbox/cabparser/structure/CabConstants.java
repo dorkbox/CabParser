@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser.structure;
+package dorkbox.cabparser.structure;
 
 public interface CabConstants {
     int CAB_BLOCK_SIZE        = 32768;

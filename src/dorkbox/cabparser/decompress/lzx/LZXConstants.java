@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser.decompress.lzx;
+package dorkbox.cabparser.decompress.lzx;
 
 public interface LZXConstants {
     public static final int PRETREE_NUM_ELEMENTS   = 20;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser;
+package dorkbox.cabparser;
 
 public final class Checksum {
     @SuppressWarnings("fallthrough")

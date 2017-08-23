@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser;
+package dorkbox.cabparser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,11 +21,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
-import dorkbox.cabParser.decompress.CabDecompressor;
-import dorkbox.cabParser.structure.CabEnumerator;
-import dorkbox.cabParser.structure.CabFileEntry;
-import dorkbox.cabParser.structure.CabFolderEntry;
-import dorkbox.cabParser.structure.CabHeader;
+import dorkbox.cabparser.decompress.CabDecompressor;
+import dorkbox.cabparser.structure.CabEnumerator;
+import dorkbox.cabparser.structure.CabFileEntry;
+import dorkbox.cabparser.structure.CabFolderEntry;
+import dorkbox.cabparser.structure.CabHeader;
 import dorkbox.util.Version;
 
 public final class CabParser {
