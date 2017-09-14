@@ -26,7 +26,6 @@ import dorkbox.cabparser.structure.CabEnumerator;
 import dorkbox.cabparser.structure.CabFileEntry;
 import dorkbox.cabparser.structure.CabFolderEntry;
 import dorkbox.cabparser.structure.CabHeader;
-import dorkbox.util.Version;
 
 public final class CabParser {
     private CabInputStream cabInputStream;
@@ -89,8 +88,8 @@ public final class CabParser {
      * Gets the version number.
      */
     public static
-    Version getVersion() {
-        return new Version("2.12");
+    String getVersion() {
+        return "2.13";
     }
 
     public Enumeration<Object> entries() {
