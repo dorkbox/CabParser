@@ -29,7 +29,7 @@ Maven Info
     <dependency>
       <groupId>com.dorkbox</groupId>
       <artifactId>CabParser</artifactId>
-      <version>2.13</version>
+      <version>2.14</version>
     </dependency>
 </dependencies>
 ```
