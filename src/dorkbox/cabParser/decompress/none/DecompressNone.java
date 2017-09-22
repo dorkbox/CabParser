@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabparser.decompress.none;
+package dorkbox.cabParser.decompress.none;
 
-import dorkbox.cabparser.CabException;
-import dorkbox.cabparser.CorruptCabException;
-import dorkbox.cabparser.decompress.Decompressor;
+import dorkbox.cabParser.CabException;
+import dorkbox.cabParser.CorruptCabException;
+import dorkbox.cabParser.decompress.Decompressor;
 
 public final class DecompressNone implements Decompressor {
     @Override

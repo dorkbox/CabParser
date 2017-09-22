@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabparser.structure;
+package dorkbox.cabParser.structure;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 
-import dorkbox.cabparser.CabParser;
+import dorkbox.cabParser.CabParser;
 
 public final class CabEnumerator implements Enumeration<Object> {
     private int        fileCount = 0;

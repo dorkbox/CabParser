@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabparser;
+package dorkbox.cabParser;
 
-public class CabException extends Exception {
+
+public final class CorruptCabException extends CabException {
     private static final long serialVersionUID = 1L;
 
-    public CabException(String errorMessage) {
+    public CorruptCabException(String errorMessage) {
         super(errorMessage);
     }
 
-    public CabException() {
+    public CorruptCabException() {
     }
 }

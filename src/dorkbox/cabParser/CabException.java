@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabparser;
+package dorkbox.cabParser;
 
-import java.io.OutputStream;
+public class CabException extends Exception {
+    private static final long serialVersionUID = 1L;
 
-import dorkbox.cabparser.structure.CabFileEntry;
+    public CabException(String errorMessage) {
+        super(errorMessage);
+    }
 
-public interface CabStreamSaver {
-    OutputStream openOutputStream(CabFileEntry entry);
-    void closeOutputStream(OutputStream outputStream, CabFileEntry entry);
-    boolean saveReservedAreaData(byte[] data, int dataLength);
+    public CabException() {
+    }
 }

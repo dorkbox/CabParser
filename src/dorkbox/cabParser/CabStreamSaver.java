@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabparser.decompress;
+package dorkbox.cabParser;
 
-import dorkbox.cabparser.CabException;
-import dorkbox.cabparser.structure.CabConstants;
+import java.io.OutputStream;
 
+import dorkbox.cabParser.structure.CabFileEntry;
 
-public interface Decompressor extends CabConstants {
-    void init(int windowBits) throws CabException;
-    void decompress(byte[] inputBytes, byte[] outputBytes, int inputLength, int outputLength) throws CabException;
-    int getMaxGrowth();
-    void reset(int windowBits) throws CabException;
+public interface CabStreamSaver {
+    OutputStream openOutputStream(CabFileEntry entry);
+    void closeOutputStream(OutputStream outputStream, CabFileEntry entry);
+    boolean saveReservedAreaData(byte[] data, int dataLength);
 }
