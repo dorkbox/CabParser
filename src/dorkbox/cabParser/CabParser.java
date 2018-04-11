@@ -15,10 +15,7 @@
  */
 package dorkbox.cabParser;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Enumeration;
 
 import dorkbox.cabParser.decompress.CabDecompressor;
@@ -79,6 +76,15 @@ public final class CabParser {
     public
     CabParser(InputStream inputStream, CabStreamSaver streamSaver) throws CabException, IOException {
         this.streamSaver = streamSaver;
+        this.cabInputStream = new CabInputStream(inputStream);
+
+        readData();
+    }
+
+
+    public
+    CabParser(InputStream inputStream, File extractPath) throws CabException, IOException {
+        this.streamSaver = new DefaultCabStreamSaver(extractPath);
         this.cabInputStream = new CabInputStream(inputStream);
 
         readData();
