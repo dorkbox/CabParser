@@ -17,7 +17,12 @@ package dorkbox.cabParser;
 
 import dorkbox.cabParser.structure.CabFileEntry;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * provide default CabStreamSaver
