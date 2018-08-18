@@ -60,7 +60,7 @@ apply plugin: "com.dorkbox.Licensing"
 apply plugin: 'java-library'
 
 
-project.description = 'Parse and extract data from Microsoft LZX compressed .cab files for Java 6+ '
+project.description = 'Parse and extract data from Microsoft LZX compressed .cab files for Java 6+'
 project.group = 'com.dorkbox'
 project.version = '2.15'
 

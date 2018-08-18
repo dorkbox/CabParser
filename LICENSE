@@ -2,7 +2,7 @@
    https://git.dorkbox.com/dorkbox/CabParser
    Copyright 2018 - The Apache Software License, Version 2.0
      dorkbox, llc
-   Parse and extract data from Microsoft LZX compressed .cab files for Java 6+ 
+   Parse and extract data from Microsoft LZX compressed .cab files for Java 6+
 
 
  - Dorkbox Utils - 
