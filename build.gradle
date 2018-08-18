@@ -104,10 +104,6 @@ static String[] javaFile(String... fileNames) {
 }
 
 
-configurations {
-    swtExampleJar
-}
-
 sourceSets {
     main {
         java {
