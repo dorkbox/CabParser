@@ -34,7 +34,6 @@ Maven Info
 </dependencies>
 ```
 
-  
 Gradle Info
 ---------
 ````
@@ -43,7 +42,6 @@ dependencies {
     compile 'com.dorkbox:CabParser:2.15'
 }
 ````
-
 
 Or if you don't want to use Maven, you can access the files directly here:  
 https://repo1.maven.org/maven2/com/dorkbox/CabParser/  
