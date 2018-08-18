@@ -1,14 +1,17 @@
-    - Dorkbox Cab Parser - Apache 2.0 License
-      https://github.com/dorkbox
-      Copyright 2012, dorkbox, llc
-        Parse and extract data from Microsoft LZX compressed .cab files for Java 6+
+ - CabParser - 
+   https://git.dorkbox.com/dorkbox/CabParser
+   Copyright 2018 - The Apache Software License, Version 2.0
+     dorkbox, llc
+   Parse and extract data from Microsoft LZX compressed .cab files for Java 6+ 
 
 
-    - Dorkbox Utils - Apache 2.0 License
-      https://github.com/dorkbox
-      Copyright 2010, dorkbox, llc
+ - Dorkbox Utils - 
+   https://git.dorkbox.com/dorkbox/Utilities
+   Copyright 2018 - The Apache Software License, Version 2.0
+     dorkbox, llc
 
 
-    - jOOU, Unsigned Numbers for Java - Apache 2.0 License
-      https://github.com/jOOQ/jOOU
-      Copyright 2011-2013, Lukas Eder, lukas.eder@gmail.com
+ - jOOU - Unsigned Numbers for Java - 
+   https://github.com/jOOQ/jOOU
+   Copyright 2013 - The Apache Software License, Version 2.0
+     Lukas Eder, lukas.eder@gmail.com
