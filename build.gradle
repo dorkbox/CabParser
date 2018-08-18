@@ -128,6 +128,9 @@ dependencies {
         // don't include any of the project dependencies for anything
         transitive = false
     }
+
+    // our main dependencies are ALSO the same as the limited utilities (they are not automatically pulled in from other sourceSets)
+    // needed by the utilities (custom since we don't want to include everything). IntelliJ includes everything, but our builds do not
 }
 
 project('Utilities') {
