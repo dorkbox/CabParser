@@ -272,16 +272,16 @@ publishing {
         maven {
             url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
             credentials {
-                username sonatypeUsername
-                password sonatypePassword
+//                username sonatypeUsername
+//                password sonatypePassword
             }
         }
     }
 }
 
 nexusStaging {
-    username sonatypeUsername
-    password sonatypePassword
+//    username sonatypeUsername
+//    password sonatypePassword
 }
 
 signing {
