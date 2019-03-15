@@ -1,6 +1,10 @@
 CAB PARSER
 ===========
 
+###### [![Dorkbox](https://badge.dorkbox.com/dorkbox.svg "Dorkbox")](https://git.dorkbox.com/dorkbox/CabParser) [![Github](https://badge.dorkbox.com/github.svg "Github")](https://github.com/dorkbox/CabParser) [![Gitlab](https://badge.dorkbox.com/gitlab.svg "Gitlab")](https://gitlab.com/dorkbox/CabParser) [![Bitbucket](https://badge.dorkbox.com/bitbucket.svg "Bitbucket")](https://bitbucket.org/dorkbox/CabParser)
+
+
+
 Provides a means to parse and extract data from Microsoft CAB files, from Java.
 
 Specifically, this project was created to extract files from within a .cab which are compressed via the LZX compression algorithm.
