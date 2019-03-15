@@ -14,308 +14,339 @@
  * limitations under the License.
  */
 
-import java.nio.file.Paths
+
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import java.time.Instant
+import java.util.*
+import kotlin.reflect.KMutableProperty
+import kotlin.reflect.full.declaredMemberProperties
 
-buildscript {
-    // load properties from custom location
-    def propsFile = Paths.get("${projectDir}/../../gradle.properties").normalize().toFile()
-    if (propsFile.canRead()) {
-        println("Loading custom property data from: ${propsFile}")
+///////////////////////////////
+//////    PUBLISH TO SONATYPE / MAVEN CENTRAL
+//////
+////// TESTING : local maven repo <PUBLISHING - publishToMavenLocal>
+//////
+////// RELEASE : sonatype / maven central, <PUBLISHING - publish> then <RELEASE - closeAndReleaseRepository>
+///////////////////////////////
 
-        def props = new Properties()
-        propsFile.withInputStream {props.load(it)}
-        props.each {key, val -> project.ext.set(key, val)}
-    }
-    else {
-        ext.sonatypeUsername = ""
-        ext.sonatypePassword = ""
-    }
-
-    // for plugin publishing and license sources
-    repositories {
-        maven {url "https://plugins.gradle.org/m2/"}
-    }
-    dependencies {
-        // this is the only way to also get the source code for IDE auto-complete
-        classpath "gradle.plugin.com.dorkbox:Licensing:1.2.2"
-        classpath "gradle.plugin.com.dorkbox:Licensing:1.2.2:sources"
-    }
-}
+println("\tGradle ${project.gradle.gradleVersion}")
 
 plugins {
-    id 'java'
-    id 'maven-publish'
-    id 'signing'
+    java
+    signing
+    `maven-publish`
 
     // close and release on sonatype
-    id 'io.codearte.nexus-staging' version '0.11.0'
+    id("io.codearte.nexus-staging") version "0.20.0"
 
-    id "com.dorkbox.CrossCompile" version "1.0.1"
-    id "com.dorkbox.VersionUpdate" version "1.2"
+    id("com.dorkbox.CrossCompile") version "1.0.1"
+    id("com.dorkbox.Licensing") version "1.4"
+    id("com.dorkbox.VersionUpdate") version "1.4.1"
 
-    // setup checking for the latest version of a plugin or dependency (and updating the gradle build)
-    id "se.patrikerdes.use-latest-versions" version "0.2.3"
-    id 'com.github.ben-manes.versions' version '0.16.0'
+    // setup checking for the latest version of a plugin or dependency
+    id("com.github.ben-manes.versions") version "0.21.0"
+
+    kotlin("jvm") version "1.3.21"
 }
 
-// this is the only way to also get the source code for IDE auto-complete
-apply plugin: "com.dorkbox.Licensing"
+object Extras {
+    // set for the project
+    const val description = "Parse and extract data from Microsoft LZX compressed .cab files for Java 6+"
+    const val group = "com.dorkbox"
+    const val version = "2.15"
 
-// give us access to api/implementation differences for building java libraries
-apply plugin: 'java-library'
+    // set as project.ext
+    const val name = "CabParser"
+    const val id = "CabParser"
+    const val vendor = "Dorkbox LLC"
+    const val url = "https://git.dorkbox.com/dorkbox/CabParser"
+    val buildDate = Instant.now().toString()
 
+    val JAVA_VERSION = JavaVersion.VERSION_1_6.toString()
 
-project.description = 'Parse and extract data from Microsoft LZX compressed .cab files for Java 6+'
-project.group = 'com.dorkbox'
-project.version = '2.15'
+    var sonatypeUserName = ""
+    var sonatypePassword = ""
+}
 
-project.ext.name = 'CabParser'
-project.ext.url = 'https://git.dorkbox.com/dorkbox/CabParser'
+///////////////////////////////
+/////  assign 'Extras'
+///////////////////////////////
+description = Extras.description
+group = Extras.group
+version = Extras.version
 
+val propsFile = File("$projectDir/../../gradle.properties").normalize()
+if (propsFile.canRead()) {
+    println("\tLoading custom property data from: [$propsFile]")
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+    val props = Properties()
+    propsFile.inputStream().use {
+        props.load(it)
+    }
+
+    val extraProperties = Extras::class.declaredMemberProperties.filterIsInstance<KMutableProperty<String>>()
+    props.forEach { (k, v) -> run {
+        val key = k as String
+        val value = v as String
+
+        val member = extraProperties.find { it.name == key }
+        if (member != null) {
+            member.setter.call(Extras::class.objectInstance, value)
+        }
+        else {
+            project.extra.set(k, v)
+        }
+    }}
+}
 
 
 licensing {
     license(License.APACHE_2) {
-        author 'dorkbox, llc'
-        url project.ext.url
-        note project.description
+        author(Extras.vendor)
+        url(Extras.url)
+        note(Extras.description)
+        note("Copyright 2011 - 2014, XIAM Solutions B.V. (http://www.xiam.nl)")
     }
 
-    license('Dorkbox Utils', License.APACHE_2) {
-        author 'dorkbox, llc'
-        url 'https://git.dorkbox.com/dorkbox/Utilities'
+
+    license("Dorkbox Utils", License.APACHE_2) {
+        author(Extras.vendor)
+        url("https://git.dorkbox.com/dorkbox/Utilities")
     }
 
-    license('jOOU - Unsigned Numbers for Java', License.APACHE_2) {
-        copyright 2013
-        author 'Lukas Eder, lukas.eder@gmail.com'
-        url 'https://github.com/jOOQ/jOOU'
+    license("jOOU - Unsigned Numbers for Java", License.APACHE_2) {
+        copyright( 2013)
+        author("Lukas Eder, lukas.eder@gmail.com")
+        url("https://github.com/jOOQ/jOOU")
     }
 }
-
 
 sourceSets {
     main {
         java {
-            setSrcDirs Collections.singletonList('src')
+            setSrcDirs(listOf("src"))
+
+            // want to include java files for the source. 'setSrcDirs' resets includes...
+            include("**/*.java")
         }
     }
 }
-
 
 repositories {
     mavenLocal() // this must be first!
     jcenter()
 }
 
-
-dependencies {
-    implementation(project('Utilities')) {
-        // don't include any of the project dependencies for anything
-        transitive = false
-    }
-
-    // our main dependencies are ALSO the same as the limited utilities (they are not automatically pulled in from other sourceSets)
-    // needed by the utilities (custom since we don't want to include everything). IntelliJ includes everything, but our builds do not
-}
-
-project('Utilities') {
-    tasks.withType(Test) {
-        // want to remove utilities project from unit tests. It's unnecessary to run unit tests for the entire Utilities project
-        exclude('**/*')
-    }
-
-    tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
-        options.incremental = true
-
-        // setup compile options. we specifically want to suppress usage of "Unsafe"
-        options.compilerArgs = ['-XDignore.symbol.file', '-Xlint:deprecation']
-    }
-}
-
 ///////////////////////////////
-//////    Task defaults
+//////    UTILITIES COMPILE
 ///////////////////////////////
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
 
-tasks.withType(Jar) {
-    duplicatesStrategy DuplicatesStrategy.FAIL
+// as long as the 'Utilities' project is ALSO imported into IntelliJ, class resolution will work (add the sources in the intellij project)
+val utils : Configuration by configurations.creating
 
-    manifest {
-        attributes['Implementation-Version'] = version
-        attributes['Build-Date'] = Instant.now().toString()
-    }
-}
+fun javaFile(vararg fileNames: String): Iterable<String> {
+    val fileList = ArrayList<String>(fileNames.size)
 
-///////////////////////////////
-//////    UTILITIES COMPILE (for inclusion into jars)
-///////////////////////////////
-static String[] javaFile(String... fileNames) {
-    def fileList = [] as ArrayList
-
-    for (name in fileNames) {
-        def fixed = name.replace('.', '/') + '.java'
-        fileList.add(fixed)
+    fileNames.forEach { name ->
+        fileList.add(name.replace('.', '/') + ".java")
     }
 
     return fileList
 }
 
-task compileUtils(type: JavaCompile) {
+task<JavaCompile>("compileUtils") {
     // we don't want the default include of **/*.java
-    getIncludes().clear()
+    includes.clear()
 
-    source = Collections.singletonList('../Utilities/src')
-    include javaFile('dorkbox.util.bytes.LittleEndian',
-                     'dorkbox.util.bytes.UByte',
-                     'dorkbox.util.bytes.UInteger',
-                     'dorkbox.util.bytes.ULong',
-                     'dorkbox.util.bytes.Unsigned',
-                     'dorkbox.util.bytes.UNumber',
-                     'dorkbox.util.bytes.UShort')
+    source = fileTree("../Utilities/src")
+    include(javaFile(
+        "dorkbox.util.bytes.LittleEndian",
+        "dorkbox.util.bytes.UByte",
+        "dorkbox.util.bytes.UInteger",
+        "dorkbox.util.bytes.ULong",
+        "dorkbox.util.bytes.Unsigned",
+        "dorkbox.util.bytes.UNumber",
+        "dorkbox.util.bytes.UShort"
+                    ))
 
-    classpath = sourceSets.main.compileClasspath
+    classpath = files(utils)
     destinationDir = file("$rootDir/build/classes_utilities")
 }
 
 ///////////////////////////////
-//////    Jar Tasks
+//////    Task defaults
 ///////////////////////////////
-jar {
-    dependsOn compileUtils
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
 
+    sourceCompatibility = Extras.JAVA_VERSION
+    targetCompatibility = Extras.JAVA_VERSION
+}
+
+tasks.jar.get().apply {
     // include applicable class files from subset of Utilities project
-    from compileUtils.destinationDir
+    from((tasks["compileUtils"] as JavaCompile).outputs)
+
+    manifest {
+        // https://docs.oracle.com/javase/tutorial/deployment/jar/packageman.html
+        attributes["Name"] = Extras.name
+
+        attributes["Specification-Title"] = Extras.name
+        attributes["Specification-Version"] = Extras.version
+        attributes["Specification-Vendor"] = Extras.vendor
+
+        attributes["Implementation-Title"] = "${Extras.group}.${Extras.id}"
+        attributes["Implementation-Version"] = Extras.buildDate
+        attributes["Implementation-Vendor"] = Extras.vendor
+    }
+}
+
+tasks.compileJava.get().apply {
+    println("\tCompiling classes to Java $sourceCompatibility")
 }
 
 
-/////////////////////////////
-////    Maven Publishing + Release
-/////////////////////////////
-task sourceJar(type: Jar) {
+dependencies {
+    // add compile utils to dependencies
+    implementation(files((tasks["compileUtils"] as JavaCompile).outputs))
+}
+
+///////////////////////////////
+//////    PUBLISH TO SONATYPE / MAVEN CENTRAL
+//////
+////// TESTING : local maven repo <PUBLISHING - publishToMavenLocal>
+//////
+////// RELEASE : sonatype / maven central, <PUBLISHING - publish> then <RELEASE - closeAndReleaseRepository>
+///////////////////////////////
+val sourceJar = task<Jar>("sourceJar") {
     description = "Creates a JAR that contains the source code."
 
-    from sourceSets.main.java
-    from compileUtils.source
+    from(sourceSets["main"].java)
 
-    classifier = "sources"
+    archiveClassifier.set("sources")
 }
 
-task javaDocJar(type: Jar) {
+val javaDocJar = task<Jar>("javaDocJar") {
     description = "Creates a JAR that contains the javadocs."
 
-    classifier = "javadoc"
+    archiveClassifier.set("javadoc")
 }
 
-// for testing, we don't publish to maven central, but only to local maven
 publishing {
     publications {
-        maven(MavenPublication) {
-            from components.java
+        create<MavenPublication>("maven") {
+            groupId = Extras.group
+            artifactId = Extras.id
+            version = Extras.version
 
-            artifact(javaDocJar)
+            from(components["java"])
+
             artifact(sourceJar)
-
-            groupId project.group
-            artifactId project.ext.name
-            version project.version
+            artifact(javaDocJar)
 
             pom {
-                withXml {
-                    // eliminate logback and utilities (no need in maven POMs)
-                    def root = asNode()
-
-                    root.dependencies.'*'.findAll() {
-                        it.artifactId.text() == "Utilities"
-                    }.each() {
-                        it.parent().remove(it)
-                    }
-                }
-
-                name = project.ext.name
-                url = project.ext.url
-                description = project.description
+                name.set(Extras.name)
+                description.set(Extras.description)
+                url.set(Extras.url)
 
                 issueManagement {
-                    url = "${project.ext.url}/issues".toString()
-                    system = 'Gitea Issues'
+                    url.set("${Extras.url}/issues")
+                    system.set("Gitea Issues")
                 }
-
                 organization {
-                    name = 'dorkbox, llc'
-                    url = 'https://dorkbox.com'
+                    name.set(Extras.vendor)
+                    url.set("https://dorkbox.com")
                 }
-
                 developers {
                     developer {
-                        name = 'dorkbox, llc'
-                        email = 'email@dorkbox.com'
+                        id.set("dorkbox")
+                        name.set(Extras.vendor)
+                        email.set("email@dorkbox.com")
                     }
                 }
-
                 scm {
-                    url = project.ext.url
-                    connection = "scm:${project.ext.url}.git".toString()
+                    url.set(Extras.url)
+                    connection.set("scm:${Extras.url}.git")
                 }
+            }
+
+        }
+    }
+
+
+    repositories {
+        maven {
+            setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+            credentials {
+                username = Extras.sonatypeUserName
+                password = Extras.sonatypePassword
             }
         }
     }
 
-    repositories {
-        maven {
-            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-            credentials {
-//                username sonatypeUsername
-//                password sonatypePassword
-            }
+
+    tasks.withType<PublishToMavenRepository> {
+        onlyIf {
+            publication == publishing.publications["maven"] && repository == publishing.repositories["maven"]
         }
+    }
+
+    tasks.withType<PublishToMavenLocal> {
+        onlyIf {
+            publication == publishing.publications["maven"]
+        }
+    }
+
+    // output the release URL in the console
+    tasks["releaseRepository"].doLast {
+        val url = "https://oss.sonatype.org/content/repositories/releases/"
+        val projectName = Extras.group.replace('.', '/')
+        val name = Extras.name
+        val version = Extras.version
+
+        println("Maven URL: $url$projectName/$name/$version/")
     }
 }
 
 nexusStaging {
-//    username sonatypeUsername
-//    password sonatypePassword
+    username = Extras.sonatypeUserName
+    password = Extras.sonatypePassword
 }
 
 signing {
-    sign publishing.publications.maven
+    sign(publishing.publications["maven"])
 }
 
-// output the release URL in the console
-releaseRepository.doLast {
-    def URL = 'https://oss.sonatype.org/content/repositories/releases/'
-    def projectName = project.group.toString().replaceAll('\\.', '/')
-    def name = project.ext.name
-    def version = project.version
 
-    println("Maven URL: ${URL}${projectName}/${name}/${version}/")
-}
 
-// we don't use maven with the plugin (it's uploaded separately to gradle plugins)
-tasks.withType(PublishToMavenRepository) {
-    onlyIf {
-        repository == publishing.repositories.maven && publication == publishing.publications.maven
+///////////////////////////////
+/////   Prevent anything other than a release from showing version updates
+////  https://github.com/ben-manes/gradle-versions-plugin/blob/master/README.md
+///////////////////////////////
+tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
+    resolutionStrategy {
+        componentSelection {
+            all {
+                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview")
+                        .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
+                        .any { it.matches(candidate.version) }
+                if (rejected) {
+                    reject("Release candidate")
+                }
+            }
+        }
     }
-}
-tasks.withType(PublishToMavenLocal) {
-    onlyIf {
-        publication == publishing.publications.maven
-    }
+
+    // optional parameters
+    checkForGradleUpdate = true
 }
 
-/////////////////////////////
-////    Gradle Wrapper Configuration.
-///  Run this task, then refresh the gradle project
-/////////////////////////////
-task updateWrapper(type: Wrapper) {
-    gradleVersion = '4.10.2'
+
+///////////////////////////////
+//////    Gradle Wrapper Configuration.
+/////  Run this task, then refresh the gradle project
+///////////////////////////////
+val wrapperUpdate by tasks.creating(Wrapper::class) {
+    gradleVersion = "5.2.1"
     distributionUrl = distributionUrl.replace("bin", "all")
-    setDistributionType(Wrapper.DistributionType.ALL)
 }
