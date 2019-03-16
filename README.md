@@ -44,7 +44,7 @@ Gradle Info
 ````
 dependencies {
     ...
-    compile 'com.dorkbox:CabParser:2.15'
+    compile "com.dorkbox:CabParser:2.15"
 }
 ````
 
