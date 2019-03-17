@@ -105,7 +105,6 @@ licensing {
         author(Extras.vendor)
         url(Extras.url)
         note(Extras.description)
-        note("Copyright 2011 - 2014, XIAM Solutions B.V. (http://www.xiam.nl)")
     }
 
 
