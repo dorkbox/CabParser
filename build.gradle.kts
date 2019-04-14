@@ -169,7 +169,7 @@ tasks.compileJava.get().apply {
 
 
 dependencies {
-    implementation("com.dorkbox:Utilities:1.0")
+    implementation("com.dorkbox:Utilities:1.1")
 }
 
 ///////////////////////////////
