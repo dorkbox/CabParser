@@ -60,8 +60,6 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
     private int     intelFileSize;
     private int     intelCursorPos;
 
-    private byte[]  savedBytes = new byte[6];
-
     private boolean intelStarted;
     private int     framesRead;
 
@@ -268,7 +266,7 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
 
     @SuppressWarnings("NumericCastThatLosesPrecision")
     private void decodeIntelBlock(byte[] bytes, int outLength) {
-        if (outLength <= 6 || !this.intelStarted) {
+        if (outLength <= 10 || !this.intelStarted) {
             this.intelCursorPos += outLength;
             return;
         }
@@ -277,14 +275,7 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
         int fileSize = this.intelFileSize;
         int abs_off = 0;
 
-        int adjustedOutLength = outLength - 6;
-
-        // save bytes
-        while (abs_off < 6) {
-            this.savedBytes[abs_off] = bytes[adjustedOutLength + abs_off];
-            bytes[adjustedOutLength + abs_off] = (byte) -24;
-            abs_off++;
-        }
+        int adjustedOutLength = outLength - 10;
 
         int dataIndex = 0;
         int cursor_pos = cursorPos + adjustedOutLength;
@@ -300,24 +291,13 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
                         (bytes[dataIndex + 2] & 0xFF) << 16 |
                         (bytes[dataIndex + 3] & 0xFF) << 24;
 
-                if (abs_off >= 0) {
-                    if (abs_off < fileSize) {
-                        int rel_off = abs_off - cursorPos;
-
-                        bytes[dataIndex] = (byte) (rel_off & 0xFF);
-                        bytes[dataIndex + 1] = (byte) (rel_off >>> 8 & 0xFF);
-                        bytes[dataIndex + 2] = (byte) (rel_off >>> 16 & 0xFF);
-                        bytes[dataIndex + 3] = (byte) (rel_off >>> 24);
-                    }
-                }
-                else if (abs_off >= -cursorPos) {
-                    int rel_off = abs_off + this.intelFileSize;
-
-                    bytes[dataIndex] = (byte) (rel_off & 0xFF);
-                    bytes[dataIndex + 1] = (byte) (rel_off >>> 8 & 0xFF);
-                    bytes[dataIndex + 2] = (byte) (rel_off >>> 16 & 0xFF);
-                    bytes[dataIndex + 3] = (byte) (rel_off >>> 24);
-                }
+                if ((abs_off >= -cursorPos) && (abs_off < fileSize)) {
+                   int rel_off = (abs_off >= 0) ? abs_off - cursorPos : abs_off + fileSize;
+                   bytes[dataIndex] = (byte) (rel_off & 0xFF);
+                   bytes[dataIndex + 1] = (byte) (rel_off >>> 8 & 0xFF);
+                   bytes[dataIndex + 2] = (byte) (rel_off >>> 16 & 0xFF);
+                   bytes[dataIndex + 3] = (byte) (rel_off >>> 24 & 0xFF);
+                 }
 
                 dataIndex += 4;
                 cursorPos += 5;
@@ -325,14 +305,7 @@ public final class DecompressLzx implements Decompressor, LZXConstants {
             cursorPos++;
         }
 
-        this.intelCursorPos = cursor_pos + 6;
-
-        // restore saved bytes
-        abs_off = 0;
-        while (abs_off < 6) {
-            bytes[adjustedOutLength + abs_off] = this.savedBytes[abs_off];
-            abs_off++;
-        }
+        this.intelCursorPos += outLength;
     }
 
     private void decompressBlockActions(int bytesToRead) throws CabException {
