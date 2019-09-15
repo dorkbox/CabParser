@@ -113,11 +113,6 @@ public final class CabParser {
     private void readData() throws CabException, IOException {
         this.header = new CabHeader(this.streamSaver);
         this.header.read(this.cabInputStream);
-
-        if (this.header.cbCabinet <= 2147483647L) {
-            this.cabInputStream.mark((int) this.header.cbCabinet);
-        }
-
         this.folders = new CabFolderEntry[this.header.cFolders];
         for (int i = 0; i < this.header.cFolders; i++) {
             this.folders[i] = new CabFolderEntry();
@@ -130,10 +125,6 @@ public final class CabParser {
         for (int i = 0; i < this.header.cFiles; i++) {
             this.files[i] = new CabFileEntry();
             this.files[i].read(this.cabInputStream);
-        }
-
-        if (this.header.cbCabinet <= 2147483647L) {
-            this.cabInputStream.mark((int) this.header.cbCabinet);
         }
     }
 
