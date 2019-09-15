@@ -109,8 +109,34 @@ final class CabInputStream extends InputStream {
 
     @Override
     public long skip(long ammount) throws IOException {
-        long l = this.inputStream.skip(ammount);
+        long l = betterSkip(this.inputStream, ammount);
         this.position += (int) l;
         return l;
     }
+    
+    /**
+     * Reliably skips over and discards n bytes of data from the input stream
+     * @param is input stream
+     * @param n the number of bytes to be skipped
+     * @return the actual number of bytes skipped
+     * @throws IOException
+     */
+    public static long betterSkip(InputStream is, long n) throws IOException {
+        long left = n;
+        while(left > 0) {
+            long l = is.skip(left);
+            if(l > 0) {
+                left -= l;
+            } else if(l == 0) { // should we retry? lets read one byte
+                if(is.read() == -1)  // EOF
+                    break;
+                else 
+                    left--;
+            } else {
+                throw new IOException("skip() returned a negative value. This should never happen");
+            }
+        }
+        return n - left;
+    }
+    
 }
