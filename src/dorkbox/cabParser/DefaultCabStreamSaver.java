@@ -51,12 +51,14 @@ public class DefaultCabStreamSaver implements CabStreamSaver{
         if (outputStream != null) {
             try {
                 ByteArrayOutputStream bos = (ByteArrayOutputStream)outputStream;
-                byte[] bytes=bos.toByteArray();
-                String filePath = extractPath.getAbsolutePath()+File.separator+entry.getName();
-                File cabEntityFile = new File(filePath);
-                cabEntityFile.createNewFile();
+                File cabEntityFile = new File(extractPath, entry.getName().replace("\\", File.separator));
+                cabEntityFile.getParentFile().mkdirs();
                 FileOutputStream fileOutputStream = new FileOutputStream(cabEntityFile);
-                fileOutputStream.write(bytes);
+		try {
+		    bos.writeTo(fileOutputStream);
+                } finally {
+                    fileOutputStream.close();
+                }
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
             } finally {
