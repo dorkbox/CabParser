@@ -91,6 +91,8 @@ public final class CabDecompressor implements CabConstants {
     }
 
     public void initialize(int compressionMethod) throws CabException {
+        this.outputOffset = 0;
+        this.uncompressedDataSize = 0L;
         int type = compressionMethod & 0xF;
         int windowBits = (compressionMethod & 0x1F00) >>> 8;
 
