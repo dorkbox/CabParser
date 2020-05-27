@@ -20,8 +20,8 @@ import java.time.Instant
 
 ///////////////////////////////
 //////    PUBLISH TO SONATYPE / MAVEN CENTRAL
-////// TESTING : (to local maven repo) <PUBLISHING - publishToMavenLocal>
-////// RELEASE : (to sonatype/maven central), <PUBLISHING - publishToSonatypeAndRelease>
+////// TESTING : (to local maven repo) <'publish and release' - 'publishToMavenLocal'>
+////// RELEASE : (to sonatype/maven central), <'publish and release' - 'publishToSonatypeAndRelease'>
 ///////////////////////////////
 
 gradle.startParameter.showStacktrace = ShowStacktrace.ALWAYS_FULL   // always show the stacktrace!
@@ -36,7 +36,7 @@ plugins {
     id("com.dorkbox.Licensing") version "1.4"
     id("com.dorkbox.VersionUpdate") version "1.4.1"
     id("com.dorkbox.GradleUtils") version "1.5"
-    id("com.dorkbox.GradlePublish") version "1.0"
+    id("com.dorkbox.GradlePublish") version "1.1"
 
     kotlin("jvm") version "1.3.72"
 }
@@ -45,7 +45,7 @@ object Extras {
     // set for the project
     const val description = "Parse and extract data from Microsoft LZX compressed .cab files for Java 6+"
     const val group = "com.dorkbox"
-    const val version = "2.2"
+    const val version = "2.15"
 
     // set as project.ext
     const val name = "CabParser"
