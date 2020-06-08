@@ -27,16 +27,14 @@ import java.time.Instant
 gradle.startParameter.showStacktrace = ShowStacktrace.ALWAYS_FULL   // always show the stacktrace!
 gradle.startParameter.warningMode = WarningMode.All
 
-println("\tGradle ${project.gradle.gradleVersion} on Java ${JavaVersion.current()}")
-
 plugins {
     java
 
+    id("com.dorkbox.GradleUtils") version "1.8"
     id("com.dorkbox.CrossCompile") version "1.0.1"
     id("com.dorkbox.Licensing") version "1.4"
     id("com.dorkbox.VersionUpdate") version "1.4.1"
-    id("com.dorkbox.GradleUtils") version "1.5"
-    id("com.dorkbox.GradlePublish") version "1.1"
+    id("com.dorkbox.GradlePublish") version "1.2"
 
     kotlin("jvm") version "1.3.72"
 }
@@ -56,21 +54,13 @@ object Extras {
     val buildDate = Instant.now().toString()
 
     val JAVA_VERSION = JavaVersion.VERSION_1_6.toString()
-
-    var sonatypeUserName = ""
-    var sonatypePassword = ""
-    var sonatypePrivateKeyFile = ""
-    var sonatypePrivateKeyPassword = ""
 }
 
 ///////////////////////////////
 /////  assign 'Extras'
 ///////////////////////////////
 GradleUtils.load("$projectDir/../../gradle.properties", Extras)
-description = Extras.description
-group = Extras.group
-version = Extras.version
-
+GradleUtils.fixIntellijPaths()
 
 licensing {
     license(License.APACHE_2) {
@@ -104,7 +94,7 @@ sourceSets {
 }
 
 repositories {
-    mavenLocal() // this must be first!
+//    mavenLocal() // this must be first!
     jcenter()
 }
 
@@ -140,7 +130,7 @@ tasks.compileJava.get().apply {
 }
 
 dependencies {
-    implementation("com.dorkbox:Utilities:1.1")
+    implementation("com.dorkbox:Utilities:1.2")
 }
 
 publishToSonatype {
@@ -164,15 +154,5 @@ publishToSonatype {
         id = "dorkbox"
         name = Extras.vendor
         email = "email@dorkbox.com"
-    }
-
-    sonatype {
-        userName = Extras.sonatypeUserName
-        password = Extras.sonatypePassword
-    }
-
-    privateKey {
-        fileName = Extras.sonatypePrivateKeyFile
-        password = Extras.sonatypePrivateKeyPassword
     }
 }
