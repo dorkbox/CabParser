@@ -11,7 +11,7 @@ Specifically, this project was created to extract files from within a .cab which
 
 Microsoft CAB file format: http://msdn.microsoft.com/en-us/library/bb417343.aspx
 
-- This is for cross-platform use, specifically - linux 32/64, mac 32/64, and windows 32/64. Java 6+
+- This is for cross-platform use, specifically - linux 32/64, mac 32/64, and windows 32/64. Java 8+
 
 
 
@@ -33,18 +33,15 @@ Maven Info
 
 Gradle Info
 ---------
-````
+```
 dependencies {
     ...
-    compile "com.dorkbox:CabParser:2.15"
+    implementation("com.dorkbox:CabParser:2.15")
 }
-````
-
-Or if you don't want to use Maven, you can access the files directly here:  
-https://repo1.maven.org/maven2/com/dorkbox/CabParser/  
-
+```
 
 License
 ---------
-This project is © 2012 dorkbox llc, and is distributed under the terms of the Apache v2.0 License. See file "LICENSE" for further references.
+This project is © 2021 dorkbox llc, and is distributed under the terms of the Apache v2.0 License. See file "LICENSE" for further 
+references.
 

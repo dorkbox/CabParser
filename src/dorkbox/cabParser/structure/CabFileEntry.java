@@ -22,7 +22,7 @@ import java.util.Date;
 
 import dorkbox.cabParser.CabException;
 import dorkbox.cabParser.CorruptCabException;
-import dorkbox.util.bytes.LittleEndian;
+import dorkbox.bytes.LittleEndian;
 
 public final class CabFileEntry {
     public static final Charset US_ASCII = Charset.forName("US-ASCII");

@@ -22,7 +22,7 @@ import java.io.InputStream;
 import dorkbox.cabParser.CabException;
 import dorkbox.cabParser.Checksum;
 import dorkbox.cabParser.CorruptCabException;
-import dorkbox.util.bytes.LittleEndian;
+import dorkbox.bytes.LittleEndian;
 
 public final class CfDataRecord {
     /** checksum of this CFDATA entry , 4bytes */

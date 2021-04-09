@@ -18,7 +18,7 @@ package dorkbox.cabParser.structure;
 import java.io.IOException;
 import java.io.InputStream;
 
-import dorkbox.util.bytes.LittleEndian;
+import dorkbox.bytes.LittleEndian;
 
 public final class CabFolderEntry implements CabConstants {
     /** offset of the first CFDATA block in this folder, 4bytes */

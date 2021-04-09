@@ -22,7 +22,7 @@ import java.io.InputStream;
 import dorkbox.cabParser.CabException;
 import dorkbox.cabParser.CabStreamSaver;
 import dorkbox.cabParser.CorruptCabException;
-import dorkbox.util.bytes.LittleEndian;
+import dorkbox.bytes.LittleEndian;
 
 public final class CabHeader implements CabConstants {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 dorkbox, llc
+ * Copyright 2021 dorkbox, llc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-
 import java.time.Instant
-
 
 ///////////////////////////////
 //////    PUBLISH TO SONATYPE / MAVEN CENTRAL
@@ -24,24 +22,22 @@ import java.time.Instant
 ////// RELEASE : (to sonatype/maven central), <'publish and release' - 'publishToSonatypeAndRelease'>
 ///////////////////////////////
 
-gradle.startParameter.showStacktrace = ShowStacktrace.ALWAYS_FULL   // always show the stacktrace!
+gradle.startParameter.showStacktrace = ShowStacktrace.ALWAYS   // always show the stacktrace!
 gradle.startParameter.warningMode = WarningMode.All
 
 plugins {
-    java
+    id("com.dorkbox.Licensing") version "2.5.5"
+    id("com.dorkbox.VersionUpdate") version "2.3"
+    id("com.dorkbox.GradleUtils") version "1.17"
+    id("com.dorkbox.GradlePublish") version "1.10"
 
-    id("com.dorkbox.GradleUtils") version "1.8"
-    id("com.dorkbox.CrossCompile") version "1.0.1"
-    id("com.dorkbox.Licensing") version "1.4"
-    id("com.dorkbox.VersionUpdate") version "1.4.1"
-    id("com.dorkbox.GradlePublish") version "1.2"
-
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.4.32"
 }
+
 
 object Extras {
     // set for the project
-    const val description = "Parse and extract data from Microsoft LZX compressed .cab files for Java 6+"
+    const val description = "Parse and extract data from Microsoft LZX compressed .cab files for Java 8+"
     const val group = "com.dorkbox"
     const val version = "2.16"
 
@@ -51,9 +47,8 @@ object Extras {
     const val vendor = "Dorkbox LLC"
     const val vendorUrl = "https://dorkbox.com"
     const val url = "https://git.dorkbox.com/dorkbox/CabParser"
-    val buildDate = Instant.now().toString()
 
-    val JAVA_VERSION = JavaVersion.VERSION_1_6.toString()
+    val buildDate = Instant.now().toString()
 }
 
 ///////////////////////////////
@@ -61,24 +56,14 @@ object Extras {
 ///////////////////////////////
 GradleUtils.load("$projectDir/../../gradle.properties", Extras)
 GradleUtils.fixIntellijPaths()
+GradleUtils.defaultResolutionStrategy()
+GradleUtils.compileConfiguration(JavaVersion.VERSION_1_8)
 
 licensing {
     license(License.APACHE_2) {
         author(Extras.vendor)
         url(Extras.url)
         note(Extras.description)
-    }
-
-
-    license("Dorkbox Utils", License.APACHE_2) {
-        author(Extras.vendor)
-        url("https://git.dorkbox.com/dorkbox/Utilities")
-    }
-
-    license("jOOU - Unsigned Numbers for Java", License.APACHE_2) {
-        copyright( 2013)
-        author("Lukas Eder, lukas.eder@gmail.com")
-        url("https://github.com/jOOQ/jOOU")
     }
 }
 
@@ -91,21 +76,6 @@ sourceSets {
             include("**/*.java")
         }
     }
-}
-
-repositories {
-//    mavenLocal() // this must be first!
-    jcenter()
-}
-
-///////////////////////////////
-//////    Task defaults
-///////////////////////////////
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-
-    sourceCompatibility = Extras.JAVA_VERSION
-    targetCompatibility = Extras.JAVA_VERSION
 }
 
 tasks.jar.get().apply {
@@ -125,12 +95,15 @@ tasks.jar.get().apply {
     }
 }
 
-tasks.compileJava.get().apply {
-    println("\tCompiling classes to Java $sourceCompatibility")
+repositories {
+    mavenLocal() // this must be first!
+    jcenter()
 }
 
 dependencies {
-    implementation("com.dorkbox:Utilities:1.2")
+    implementation("com.dorkbox:ByteUtilities:1.0")
+    implementation("com.dorkbox:Updates:1.0")
+    implementation("com.dorkbox:Utilities:1.9")
 }
 
 publishToSonatype {
