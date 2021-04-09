@@ -99,7 +99,7 @@ public final class CabParser {
      */
     public static
     String getVersion() {
-        return "2.16";
+        return "3.0";
     }
 
     public Enumeration<Object> entries() {
