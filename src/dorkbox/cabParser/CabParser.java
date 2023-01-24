@@ -29,6 +29,19 @@ import dorkbox.cabParser.structure.CabFolderEntry;
 import dorkbox.cabParser.structure.CabHeader;
 
 public final class CabParser {
+    /**
+     * Gets the version number.
+     */
+    public static
+    String getVersion() {
+        return "3.1";
+    }
+
+    static {
+        // Add this project to the updates system, which verifies this class + UUID + version information
+        dorkbox.updates.Updates.INSTANCE.add(CabParser.class, "41f560ca51c04bfdbca21328e0cbf206", getVersion());
+    }
+
     private CabInputStream cabInputStream;
 
     private CabStreamSaver streamSaver;
@@ -92,14 +105,6 @@ public final class CabParser {
         this.cabInputStream = new CabInputStream(inputStream);
 
         readData();
-    }
-
-    /**
-     * Gets the version number.
-     */
-    public static
-    String getVersion() {
-        return "3.0";
     }
 
     public Enumeration<Object> entries() {
@@ -200,4 +205,3 @@ public final class CabParser {
         return this.outputStream;
     }
 }
-
