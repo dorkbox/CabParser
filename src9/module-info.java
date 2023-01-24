@@ -11,6 +11,4 @@ module com.dorkbox.cab_parser {
     requires transitive dorkbox.bytes;
     requires transitive dorkbox.updates;
     requires transitive dorkbox.utilities;
-
-    requires transitive kotlin.stdlib;
 }
