@@ -26,12 +26,10 @@ gradle.startParameter.showStacktrace = ShowStacktrace.ALWAYS   // always show th
 gradle.startParameter.warningMode = WarningMode.All
 
 plugins {
-    id("com.dorkbox.Licensing") version "2.5.5"
-    id("com.dorkbox.VersionUpdate") version "2.3"
-    id("com.dorkbox.GradleUtils") version "1.17"
-    id("com.dorkbox.GradlePublish") version "1.10"
-
-    kotlin("jvm") version "1.4.32"
+    id("com.dorkbox.GradleUtils") version "3.9"
+    id("com.dorkbox.Licensing") version "2.19.1"
+    id("com.dorkbox.VersionUpdate") version "2.5"
+    id("com.dorkbox.GradlePublish") version "1.17"
 }
 
 object Extras {
@@ -54,26 +52,15 @@ object Extras {
 /////  assign 'Extras'
 ///////////////////////////////
 GradleUtils.load("$projectDir/../../gradle.properties", Extras)
-GradleUtils.fixIntellijPaths()
-GradleUtils.defaultResolutionStrategy()
+GradleUtils.defaults()
 GradleUtils.compileConfiguration(JavaVersion.VERSION_1_8)
+GradleUtils.jpms(JavaVersion.VERSION_1_9)
 
 licensing {
     license(License.APACHE_2) {
         author(Extras.vendor)
         url(Extras.url)
         note(Extras.description)
-    }
-}
-
-sourceSets {
-    main {
-        java {
-            setSrcDirs(listOf("src"))
-
-            // want to include java files for the source. 'setSrcDirs' resets includes...
-            include("**/*.java")
-        }
     }
 }
 
@@ -89,20 +76,13 @@ tasks.jar.get().apply {
         attributes["Implementation-Title"] = "${Extras.group}.${Extras.id}"
         attributes["Implementation-Version"] = Extras.buildDate
         attributes["Implementation-Vendor"] = Extras.vendor
-
-        attributes["Automatic-Module-Name"] = Extras.id
     }
 }
 
-repositories {
-    mavenLocal() // this must be first!
-    jcenter()
-}
-
 dependencies {
-    implementation("com.dorkbox:ByteUtilities:1.0")
-    implementation("com.dorkbox:Updates:1.0")
-    implementation("com.dorkbox:Utilities:1.9")
+    api("com.dorkbox:ByteUtilities:1.6")
+    api("com.dorkbox:Updates:1.1")
+    api("com.dorkbox:Utilities:1.39")
 }
 
 publishToSonatype {
