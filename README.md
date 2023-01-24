@@ -1,7 +1,7 @@
 CAB PARSER
 ===========
 
-###### [![Dorkbox](https://badge.dorkbox.com/dorkbox.svg "Dorkbox")](https://git.dorkbox.com/dorkbox/CabParser) [![Github](https://badge.dorkbox.com/github.svg "Github")](https://github.com/dorkbox/CabParser) [![Gitlab](https://badge.dorkbox.com/gitlab.svg "Gitlab")](https://gitlab.com/dorkbox/CabParser) [![Bitbucket](https://badge.dorkbox.com/bitbucket.svg "Bitbucket")](https://bitbucket.org/dorkbox/CabParser)
+###### [![Dorkbox](https://badge.dorkbox.com/dorkbox.svg "Dorkbox")](https://git.dorkbox.com/dorkbox/CabParser) [![Github](https://badge.dorkbox.com/github.svg "Github")](https://github.com/dorkbox/CabParser) [![Gitlab](https://badge.dorkbox.com/gitlab.svg "Gitlab")](https://gitlab.com/dorkbox/CabParser)
 
 
 
@@ -26,7 +26,7 @@ Maven Info
     <dependency>
       <groupId>com.dorkbox</groupId>
       <artifactId>CabParser</artifactId>
-      <version>2.15</version>
+      <version>3.1</version>
     </dependency>
 </dependencies>
 ```
@@ -36,12 +36,11 @@ Gradle Info
 ```
 dependencies {
     ...
-    implementation("com.dorkbox:CabParser:2.15")
+    implementation("com.dorkbox:CabParser:3.1")
 }
 ```
 
 License
 ---------
-This project is © 2021 dorkbox llc, and is distributed under the terms of the Apache v2.0 License. See file "LICENSE" for further 
+This project is © 2023 dorkbox llc, and is distributed under the terms of the Apache v2.0 License. See file "LICENSE" for further 
 references.
-
