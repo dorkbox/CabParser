@@ -1,4 +1,4 @@
-module com.dorkbox.cab_parser {
+module dorkbox.cabParser {
     exports dorkbox.cabParser;
     exports dorkbox.cabParser.decompress;
     exports dorkbox.cabParser.decompress.lzx;
