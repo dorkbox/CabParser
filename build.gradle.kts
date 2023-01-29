@@ -36,7 +36,7 @@ object Extras {
     // set for the project
     const val description = "Parse and extract data from Microsoft LZX compressed .cab files for Java 8+"
     const val group = "com.dorkbox"
-    const val version = "3.1"
+    const val version = "3.2"
 
     // set as project.ext
     const val name = "CabParser"

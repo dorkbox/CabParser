@@ -34,7 +34,7 @@ public final class CabParser {
      */
     public static
     String getVersion() {
-        return "3.1";
+        return "3.2";
     }
 
     static {
