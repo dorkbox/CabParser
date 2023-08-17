@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 dorkbox, llc
+ * Copyright 2023 dorkbox, llc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser.extractor;
+package dorkbox.cabParser
 
-import dorkbox.cabParser.structure.CabFileEntry;
-
-/**
- * Implement it to select files to extract from CAB.
- */
-public interface CabFileFilter {
-
-    /**
-     * Is invoked on each File Entry found in CAB file.
-     * 
-     * @return <code>true</code> to extract file, <code>false</code> to ignore
-     */
-    public boolean test(CabFileEntry cabFile);
+class CorruptCabException : CabException {
+    constructor(errorMessage: String?) : super(errorMessage)
+    constructor()
 }

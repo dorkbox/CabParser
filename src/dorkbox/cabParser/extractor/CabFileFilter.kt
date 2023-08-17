@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 dorkbox, llc
+ * Copyright 2019 dorkbox, llc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser;
+package dorkbox.cabParser.extractor
 
-import java.io.OutputStream;
+import dorkbox.cabParser.structure.CabFileEntry
 
-import dorkbox.cabParser.structure.CabFileEntry;
-
-public interface CabStreamSaver {
-    OutputStream openOutputStream(CabFileEntry entry);
-    void closeOutputStream(OutputStream outputStream, CabFileEntry entry);
-    boolean saveReservedAreaData(byte[] data, int dataLength);
+/**
+ * Implement it to select files to extract from CAB.
+ */
+interface CabFileFilter {
+    /**
+     * Is invoked on each File Entry found in CAB file.
+     *
+     * @return `true` to extract file, `false` to ignore
+     */
+    fun test(cabFile: CabFileEntry?): Boolean
 }

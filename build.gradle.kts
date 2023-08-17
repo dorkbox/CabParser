@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 dorkbox, llc
+ * Copyright 2023 dorkbox, llc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,12 @@ gradle.startParameter.showStacktrace = ShowStacktrace.ALWAYS   // always show th
 gradle.startParameter.warningMode = WarningMode.All
 
 plugins {
-    id("com.dorkbox.GradleUtils") version "3.9"
-    id("com.dorkbox.Licensing") version "2.19.1"
-    id("com.dorkbox.VersionUpdate") version "2.5"
-    id("com.dorkbox.GradlePublish") version "1.17"
+    id("com.dorkbox.GradleUtils") version "3.17"
+    id("com.dorkbox.Licensing") version "2.25"
+    id("com.dorkbox.VersionUpdate") version "2.8"
+    id("com.dorkbox.GradlePublish") version "1.18"
+
+    kotlin("jvm") version "1.8.0"
 }
 
 object Extras {
@@ -44,8 +46,6 @@ object Extras {
     const val vendor = "Dorkbox LLC"
     const val vendorUrl = "https://dorkbox.com"
     const val url = "https://git.dorkbox.com/dorkbox/CabParser"
-
-    val buildDate = Instant.now().toString()
 }
 
 ///////////////////////////////
@@ -64,6 +64,19 @@ licensing {
     }
 }
 
+// make java source available to kotlin
+kotlin {
+    sourceSets {
+        main {
+            // we have some java we depend on
+            kotlin.include("**/*.java", "**/*.kt")
+        }
+        test {
+            kotlin.include("**/*.java", "**/*.kt")
+        }
+    }
+}
+
 tasks.jar.get().apply {
     manifest {
         // https://docs.oracle.com/javase/tutorial/deployment/jar/packageman.html
@@ -74,15 +87,15 @@ tasks.jar.get().apply {
         attributes["Specification-Vendor"] = Extras.vendor
 
         attributes["Implementation-Title"] = "${Extras.group}.${Extras.id}"
-        attributes["Implementation-Version"] = Extras.buildDate
+        attributes["Implementation-Version"] = GradleUtils.now()
         attributes["Implementation-Vendor"] = Extras.vendor
     }
 }
 
 dependencies {
-    api("com.dorkbox:ByteUtilities:1.6")
+    api("com.dorkbox:ByteUtilities:1.13")
     api("com.dorkbox:Updates:1.1")
-    api("com.dorkbox:Utilities:1.39")
+    api("com.dorkbox:Utilities:1.44")
 }
 
 publishToSonatype {

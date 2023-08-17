@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 dorkbox, llc
+ * Copyright 2023 dorkbox, llc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser;
+package dorkbox.cabParser
 
-public class CabException extends Exception {
-    private static final long serialVersionUID = 1L;
+import dorkbox.cabParser.structure.CabFileEntry
+import java.io.OutputStream
 
-    public CabException(String errorMessage) {
-        super(errorMessage);
-    }
-
-    public CabException() {
-    }
+interface CabStreamSaver {
+    fun openOutputStream(entry: CabFileEntry): OutputStream?
+    fun closeOutputStream(outputStream: OutputStream, entry: CabFileEntry)
+    fun saveReservedAreaData(data: ByteArray?, dataLength: Int): Boolean
 }

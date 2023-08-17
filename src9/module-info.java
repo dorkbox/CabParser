@@ -8,7 +8,7 @@ module dorkbox.cabParser {
     exports dorkbox.cabParser.structure;
 
 
-    requires transitive dorkbox.bytes;
+    requires transitive dorkbox.byteUtils;
     requires transitive dorkbox.updates;
     requires transitive dorkbox.utilities;
 }

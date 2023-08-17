@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 dorkbox, llc
+ * Copyright 2023 dorkbox, llc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,8 +72,8 @@ public final class CabDecompressor implements CabConstants {
                 throw new CorruptCabException("Invalid CFDATA checksum");
             }
 
-            this.decompressor.decompress(this.readBuffer, this.bytes, this.cfDataRecord.cbData, this.cfDataRecord.cbUncomp);
-            this.uncompressedDataSize = this.cfDataRecord.cbUncomp;
+            this.decompressor.decompress(this.readBuffer, this.bytes, this.cfDataRecord.getCbData(), this.cfDataRecord.getCbUncomp());
+            this.uncompressedDataSize = this.cfDataRecord.getCbUncomp();
             this.outputOffset = 0;
 
             if (this.uncompressedDataSize >= size) {

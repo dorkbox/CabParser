@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 dorkbox, llc
+ * Copyright 2023 dorkbox, llc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -160,7 +160,7 @@ public class CabExtractor {
     }
 
     public static String getVersion() {
-        return CabParser.getVersion();
+        return CabParser.version;
     }
 
     public Enumeration<Object> entries() {

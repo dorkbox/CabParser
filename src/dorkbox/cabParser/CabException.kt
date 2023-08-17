@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 dorkbox, llc
+ * Copyright 2023 dorkbox, llc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dorkbox.cabParser;
+package dorkbox.cabParser
 
-
-public final class CorruptCabException extends CabException {
-    private static final long serialVersionUID = 1L;
-
-    public CorruptCabException(String errorMessage) {
-        super(errorMessage);
-    }
-
-    public CorruptCabException() {
-    }
+open class CabException : Exception {
+    constructor(errorMessage: String?) : super(errorMessage)
+    constructor()
 }
