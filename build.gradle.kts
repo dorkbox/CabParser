@@ -93,9 +93,9 @@ tasks.jar.get().apply {
 }
 
 dependencies {
-    api("com.dorkbox:ByteUtilities:1.13")
+    api("com.dorkbox:ByteUtilities:1.14")
     api("com.dorkbox:Updates:1.1")
-    api("com.dorkbox:Utilities:1.44")
+    api("com.dorkbox:Utilities:1.45")
 }
 
 publishToSonatype {
