@@ -65,7 +65,7 @@ class CabParser {
                 }
             }
 
-            override fun closeOutputStream(outputStream: OutputStream, cabFile: CabFileEntry) {
+            override fun closeOutputStream(outputStream: OutputStream, entry: CabFileEntry) {
                 try {
                     outputStream.close()
                 }
