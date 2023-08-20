@@ -29,7 +29,7 @@ class CabParser {
         /**
          * Gets the version number.
          */
-        const val version: String = "3.2"
+        const val version = "3.4"
 
         init {
             // Add this project to the updates system, which verifies this class + UUID + version information

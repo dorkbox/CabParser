@@ -38,7 +38,7 @@ object Extras {
     // set for the project
     const val description = "Parse and extract data from Microsoft LZX compressed .cab files for Java 8+"
     const val group = "com.dorkbox"
-    const val version = "3.3"
+    const val version = "3.4"
 
     // set as project.ext
     const val name = "CabParser"
@@ -93,9 +93,9 @@ tasks.jar.get().apply {
 }
 
 dependencies {
-    api("com.dorkbox:ByteUtilities:1.14")
+    api("com.dorkbox:ByteUtilities:2.0")
     api("com.dorkbox:Updates:1.1")
-    api("com.dorkbox:Utilities:1.45")
+    api("com.dorkbox:Utilities:1.46")
 }
 
 publishToSonatype {

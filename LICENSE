@@ -14,7 +14,7 @@
        Kotlin Compiler, Test Data+Libraries, and Tools repository contain third-party code, to which different licenses may apply
        See: https://github.com/JetBrains/kotlin/blob/master/license/README.md
 
-     - ByteUtils - Byte manipulation and SHA/xxHash utilities
+     - ByteUtilities - Byte manipulation and SHA/xxHash utilities
        [The Apache Software License, Version 2.0]
        https://git.dorkbox.com/dorkbox/ByteUtilities
        Copyright 2023
@@ -26,12 +26,6 @@
            https://github.com/EsotericSoftware/kryo
            Copyright 2020
              Nathan Sweet
-
-         - Kotlin Hex - 
-           [MIT License]
-           https://github.com/komputing/KHex
-           Copyright 2017
-             ligi
 
          - Base58 - 
            [The Apache Software License, Version 2.0]
@@ -145,13 +139,6 @@
            Copyright 2014
              Lightweight Java Game Library Project
              Riven
-
-         - Modified hex conversion utility methods - 
-           [The Apache Software License, Version 2.0]
-           https://git.dorkbox.com/dorkbox/Utilities
-           https://netty.io
-           Copyright 2014
-             The Netty Project
 
          - Retrofit - A type-safe HTTP client for Android and Java
            [The Apache Software License, Version 2.0]
